@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  username: watila
+  password: 123456
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: acars_2022_api_devel
+
+test:
+  <<: *default
+  database: acars_2022_api_test
+
+production:
+  <<: *default
+  database: acars_2022_api_prod
+  username: acars_api
+  password: <%= ENV["ACARS_API_DATABASE_PASSWORD"] %>
