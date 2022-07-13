@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   host: localhost
   username: watila
-  password: 123456
+  password: 12345678
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
