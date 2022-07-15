@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 gem 'bootsnap', require: false
+gem 'devise'
 gem 'interactor', '~> 3.0'
 gem 'jsonapi-serializer'
 gem 'pg', '~> 1.1'
