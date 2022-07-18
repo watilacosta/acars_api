@@ -38,3 +38,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "annotate", "~> 3.2"

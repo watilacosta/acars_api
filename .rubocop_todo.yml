@@ -49,6 +49,8 @@ Metrics/PerceivedComplexity:
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
+    - 'db/migrate/**/*.rb'
+    - 'app/controllers/**/*.rb'
     - 'spec/**/*'
     - 'test/**/*'
     - 'app/**/*'
