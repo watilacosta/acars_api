@@ -4,7 +4,7 @@ require 'csv'
 
 p 'Creating airports...'
 CSV.foreach('db/data/airports.csv', headers: true) do |row|
-  Airport.create!(
+  Airport.find_or_create_by!(
     icao: row[0],
     name: row[1],
     lat: row[2],
@@ -17,5 +17,3 @@ rescue ActiveRecord::RecordInvalid => e
 end
 
 p "Created airports: #{Airport.count}"
-
-# SBSJ

@@ -5,7 +5,7 @@ WORKDIR /acars_api
 COPY Gemfile /acars_api/Gemfile
 COPY Gemfile.lock /acars_api/Gemfile.lock
 RUN bundle install
-RUN chown -R $USER:$USER /acars_api
+RUN chown -R $USER:$USER .
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
