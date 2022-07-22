@@ -105,6 +105,9 @@ GEM
     i18n (1.11.0)
       concurrent-ruby (~> 1.0)
     interactor (3.1.2)
+    interactor-rails (2.2.1)
+      interactor (~> 3.0)
+      rails (>= 4.2)
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
@@ -253,7 +256,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
-  interactor (~> 3.0)
+  interactor-rails (~> 2.0)
   jsonapi-serializer
   pg (~> 1.1)
   pry-rails

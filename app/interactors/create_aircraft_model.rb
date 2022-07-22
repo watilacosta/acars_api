@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-module Interactors
-  class CreateAircraftModel
-    include Interactor
+class CreateAircraftModel
+  include Interactor
 
-    def call
-      context.fail! unless AircraftModel.create!(context.aircraft_model_params)
-    end
+  def call
+    aircraft_model = AircraftModel.create!(context.permitted_params)
+
+    context.aircraft_model = aircraft_model
+  rescue ActiveRecord::RecordInvalid => e
+    context.fail!(message: e.record.errors.full_messages.join(', ').to_s)
   end
 end

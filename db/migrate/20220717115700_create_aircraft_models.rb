@@ -3,7 +3,7 @@
 class CreateAircraftModels < ActiveRecord::Migration[7.0]
   def change
     create_table :aircraft_models do |t|
-      t.string :description, null: false
+      t.string :description, null: false, unique: true
       t.string :maker, null: false
 
       t.timestamps
