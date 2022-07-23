@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :aircraft_models, only: %i[create]
+  get 'user_query/index' => 'user_query#index'
+
+  resources :aircraft_models, only: %i[index create]
 end

@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
-class AircraftModelsController < ApplicationController
+class AircraftModelsController < ApplicationController # :nodoc:
+  def index
+    aircraft_models = AircraftModelSerializer.new(AircraftModel.all).serializable_hash
+
+    render json: aircraft_models, status: :ok
+  end
+
   def create
     result = CreateAircraftModel.call(permitted_params:)
 
