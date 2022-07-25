@@ -3,5 +3,5 @@
 Rails.application.routes.draw do
   get 'user_query/index' => 'user_query#index'
 
-  resources :aircraft_models, only: %i[index create]
+  resources :aircraft_models, only: %i[index create update]
 end
