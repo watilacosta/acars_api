@@ -4,10 +4,9 @@ class FindAircraftModel
   include Interactor
 
   def call
-    binding.pry
     context.aircraft_model = find_aircraft_model
   rescue ActiveRecord::RecordNotFound => e
-    context.fail!(message: e.record&.errors&.full_messages&.join(', ').to_s)
+    context.fail!(message: e)
   end
 
   private

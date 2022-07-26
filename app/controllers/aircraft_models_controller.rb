@@ -1,36 +1,38 @@
 # frozen_string_literal: true
 
 class AircraftModelsController < ApplicationController # :nodoc:
-  before_action :aircraft_model, only: [:update]
-
   def index
-    aircraft_models = AircraftModelSerializer.new(AircraftModel.all).serializable_hash
+    result = ListAircraftModel.call
 
-    render json: aircraft_models, status: :ok
+    render json: result.aircraft_models, status: :ok
   end
 
   def create
     result = CreateAircraftModel.call(permitted_params:)
 
     if result.success?
-      render json: { aircraft_model: result.aircraft_model }, status: :ok
+      aircraft_model = aircraft_model_serialized(result.aircraft_model)
+      render json: { aircraft_model: }, status: :ok
     else
       render json: { error: result.message }, status: :unprocessable_entity
     end
   end
 
   def update
-    UpdateAircraftModel.call(aircraft_model:)
+    result = UpdateAircraftModelOrganizer.call(permitted_params:)
 
-    render json: { aircraft_model: }, status: :ok
-  rescue ActiveRecord::RecordNotFound => e
-    render json: { error: e.message }, status: :not_found
+    if result.success?
+      aircraft_model = aircraft_model_serialized(result.aircraft_model)
+      render json: { aircraft_model: }, status: :ok
+    else
+      render json: { error: result.message }, status: :not_found
+    end
   end
 
   private
 
-  def aircraft_model
-    AircraftModel.find(params[:id])
+  def aircraft_model_serialized(aircraft_model)
+    AircraftModelSerializer.new(aircraft_model).serializable_hash
   end
 
   def permitted_params

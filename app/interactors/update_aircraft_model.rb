@@ -12,7 +12,6 @@ class UpdateAircraftModel
   private
 
   def update!
-    binding.pry
-    AircraftModel.update!(context.aircraft_model)
+    context.aircraft_model.update!(context.permitted_params)
   end
 end
