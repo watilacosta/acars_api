@@ -6,7 +6,7 @@ class FindAircraftModel
   def call
     context.aircraft_model = find_aircraft_model
   rescue ActiveRecord::RecordNotFound => e
-    context.fail!(message: e)
+    context.fail!(error: e.message)
   end
 
   private

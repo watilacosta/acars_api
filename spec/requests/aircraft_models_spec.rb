@@ -79,9 +79,10 @@ RSpec.describe 'AircraftModels', type: :request do
     end
 
     context 'when the request is invalid' do
+      let(:aircraft_model_attributes) { { description: 'Test', id: 0 } }
       before do
         put aircraft_model_path(aircraft_model),
-            params: { aircraft_model: { description: 'Test', id: 0 } }
+            params: { aircraft_model: aircraft_model_attributes }
       end
 
       it 'returns http unprocessable entity' do
@@ -90,12 +91,32 @@ RSpec.describe 'AircraftModels', type: :request do
 
       it 'does not update the aircraft model' do
         description = AircraftModel.find(aircraft_model.id).description
-        expect(description).to eq(aircraft_model.description)
+        expect(description).to_not eq(aircraft_model_attributes[:description])
       end
 
       it 'returns the error message' do
         expect(json['error']).to include("Couldn't find AircraftModel with 'id'=0")
       end
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    let(:aircraft_model) { create(:aircraft_model) }
+
+    context 'when the request is valid' do
+      before { delete aircraft_model_path(aircraft_model) }
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      # it 'deletes the aircraft model' do
+      #   expect(AircraftModel.count).to eq(0)
+      # end
+      #
+      # it 'deletes the aircraft model' do
+      #   expect(AircraftModel.count).to eq(0)
+      # end
     end
   end
 end

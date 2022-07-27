@@ -25,8 +25,12 @@ class AircraftModelsController < ApplicationController # :nodoc:
       aircraft_model = aircraft_model_serialized(result.aircraft_model)
       render json: { aircraft_model: }, status: :ok
     else
-      render json: { error: result.message }, status: :not_found
+      render json: { error: result.error }, status: :not_found
     end
+  end
+
+  def destroy
+    
   end
 
   private
