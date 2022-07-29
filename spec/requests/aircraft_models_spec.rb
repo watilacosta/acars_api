@@ -101,22 +101,36 @@ RSpec.describe 'AircraftModels', type: :request do
   end
 
   describe 'DELETE /destroy' do
-    let(:aircraft_model) { create(:aircraft_model) }
-
     context 'when the request is valid' do
-      before { delete aircraft_model_path(aircraft_model) }
+      before do
+        aircraft_model = create(:aircraft_model)
 
-      it 'returns http success' do
-        expect(response).to have_http_status(:no_content)
+        delete aircraft_model_path(aircraft_model),
+               params: { aircraft_model: { id: aircraft_model.id } }
       end
 
-      # it 'deletes the aircraft model' do
-      #   expect(AircraftModel.count).to eq(0)
-      # end
-      #
-      # it 'deletes the aircraft model' do
-      #   expect(AircraftModel.count).to eq(0)
-      # end
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'deletes the aircraft model' do
+        expect(AircraftModel.count).to eq(0)
+      end
+    end
+
+    context 'when the request is invalid' do
+      before do
+        create(:aircraft_model)
+        delete aircraft_model_path(0), params: { aircraft_model: { id: 0 } }
+      end
+
+      it 'returns http unprocessable entity' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'does not delete the aircraft model' do
+        expect(AircraftModel.count).to eq(1)
+      end
     end
   end
 end

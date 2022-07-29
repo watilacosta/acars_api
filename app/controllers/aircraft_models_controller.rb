@@ -30,7 +30,13 @@ class AircraftModelsController < ApplicationController # :nodoc:
   end
 
   def destroy
-    
+    result = DeleteAircraftModelOrganizer.call(permitted_params:)
+
+    if result.success?
+      render json: {}, status: :no_content
+    else
+      render json: { error: result.error }, status: :not_found
+    end
   end
 
   private
