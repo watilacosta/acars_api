@@ -107,12 +107,11 @@ RSpec.describe 'AircraftModels', type: :request do
       before do
         aircraft_model = create(:aircraft_model)
 
-        delete aircraft_model_path(aircraft_model),
-               params: { aircraft_model: { id: aircraft_model.id } }
+        delete aircraft_model_path(aircraft_model.id)
       end
 
       it 'returns http success' do
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:no_content)
       end
 
       it 'deletes the aircraft model' do
@@ -123,7 +122,7 @@ RSpec.describe 'AircraftModels', type: :request do
     context 'when the request is invalid' do
       before do
         create(:aircraft_model)
-        delete aircraft_model_path(0), params: { aircraft_model: { id: 0 } }
+        delete aircraft_model_path(0)
       end
 
       it 'returns http unprocessable entity' do
