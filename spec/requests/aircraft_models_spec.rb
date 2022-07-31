@@ -52,7 +52,9 @@ RSpec.describe 'AircraftModels', type: :request do
 
   describe 'PUT /update' do
     let(:aircraft_model) { create(:aircraft_model) }
-    let(:aircraft_model_attributes) { { description: 'Test', maker: 'Test', id: aircraft_model.id } }
+    let(:aircraft_model_attributes) do
+      { description: 'Test', maker: 'Test', id: aircraft_model.id }
+    end
 
     context 'when the request is valid' do
       before do
@@ -79,10 +81,10 @@ RSpec.describe 'AircraftModels', type: :request do
     end
 
     context 'when the request is invalid' do
-      let(:aircraft_model_attributes) { { description: 'Test', id: 0 } }
+      let(:invalid_attributes) { { description: 'Test' } }
       before do
-        put aircraft_model_path(aircraft_model),
-            params: { aircraft_model: aircraft_model_attributes }
+        put aircraft_model_path(id: 0),
+            params: { aircraft_model: invalid_attributes }
       end
 
       it 'returns http unprocessable entity' do
@@ -91,7 +93,7 @@ RSpec.describe 'AircraftModels', type: :request do
 
       it 'does not update the aircraft model' do
         description = AircraftModel.find(aircraft_model.id).description
-        expect(description).to_not eq(aircraft_model_attributes[:description])
+        expect(description).to_not eq(invalid_attributes[:description])
       end
 
       it 'returns the error message' do
@@ -105,12 +107,11 @@ RSpec.describe 'AircraftModels', type: :request do
       before do
         aircraft_model = create(:aircraft_model)
 
-        delete aircraft_model_path(aircraft_model),
-               params: { aircraft_model: { id: aircraft_model.id } }
+        delete aircraft_model_path(aircraft_model.id)
       end
 
       it 'returns http success' do
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:no_content)
       end
 
       it 'deletes the aircraft model' do
@@ -121,7 +122,7 @@ RSpec.describe 'AircraftModels', type: :request do
     context 'when the request is invalid' do
       before do
         create(:aircraft_model)
-        delete aircraft_model_path(0), params: { aircraft_model: { id: 0 } }
+        delete aircraft_model_path(0)
       end
 
       it 'returns http unprocessable entity' do

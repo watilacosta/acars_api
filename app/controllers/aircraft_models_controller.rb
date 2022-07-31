@@ -30,7 +30,9 @@ class AircraftModelsController < ApplicationController # :nodoc:
   end
 
   def destroy
-    result = DeleteAircraftModelOrganizer.call(permitted_params:)
+    result = DeleteAircraftModelOrganizer.call(
+      permitted_params: { id: params[:id] }
+    )
 
     if result.success?
       render json: {}, status: :no_content
@@ -46,6 +48,7 @@ class AircraftModelsController < ApplicationController # :nodoc:
   end
 
   def permitted_params
-    params.require(:aircraft_model).permit(:description, :maker, :id)
+    params.require(:aircraft_model).permit(:description, :maker)
+          .merge(id: params[:id])
   end
 end
