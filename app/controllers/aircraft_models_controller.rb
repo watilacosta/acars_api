@@ -46,6 +46,7 @@ class AircraftModelsController < ApplicationController # :nodoc:
   end
 
   def permitted_params
-    params.require(:aircraft_model).permit(:description, :maker, :id)
+    params.require(:aircraft_model).permit(:description, :maker)
+          .merge(id: params[:id])
   end
 end

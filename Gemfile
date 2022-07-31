@@ -17,6 +17,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'annotate', '~> 3.2'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'faker'
@@ -42,7 +43,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem 'spring'
 end
-
-gem 'annotate', '~> 3.2'
-gem 'jsonapi-serializer'
-
