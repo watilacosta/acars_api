@@ -27,4 +27,22 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  belongs_to :rating
+
+  validates :rating, presence: true
+  validates :callsign, length: { maximum: 7 }, presence: true
+  validates :firstname, length: { maximum: 50 }
+  validates :lastname, length: { maximum: 50 }
+
+  enum profile: {
+    pilot: 0,
+    admin: 1,
+    staff: 2
+  }
+
+  enum status: {
+    inactive: 0,
+    active: 1,
+  }
 end

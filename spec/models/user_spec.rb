@@ -23,5 +23,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    subject { build(:user) }
+
+    it { is_expected.to validate_length_of(:callsign).is_at_most(7) }
+    it { is_expected.to validate_presence_of(:callsign) }
+    it { is_expected.to validate_length_of(:firstname).is_at_most(50) }
+    it { is_expected.to validate_length_of(:lastname).is_at_most(50) }
+    it { is_expected.to validate_presence_of(:rating) }
+  end
+
+
+  # associations
+  it { is_expected.to belong_to(:rating) }
 end

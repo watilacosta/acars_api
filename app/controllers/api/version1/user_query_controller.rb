@@ -4,9 +4,12 @@ module Api
   module Version1
     class UserQueryController < ApplicationController
       def index
-        return render body: 'NOUSR' unless valid_params?
+        User.find_by!(email: user_query_params[:user])
 
-        render body: 'USEROK'
+        render body: valid_params? ? 'USEROK' : 'NOUSER'
+      rescue ActiveRecord::RecordNotFound => e
+        Rails.logger.error e.message
+        render body: 'NOUSER'
       end
 
       private
