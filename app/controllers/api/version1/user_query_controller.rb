@@ -4,7 +4,7 @@ module Api
   module Version1
     class UserQueryController < ApplicationController
       def index
-        User.find_by!(email: user_query_params[:user])
+        FindUser.call(params[:user])
 
         render body: valid_params? ? 'USEROK' : 'NOUSER'
       rescue ActiveRecord::RecordNotFound => e
@@ -14,14 +14,14 @@ module Api
 
       private
 
-      def user_query_params
+      def params
         params.slice(:user, :pass, :auth, :ver, :lat, :lon, :eqpt)
       end
 
       def valid_params?
-        user_query_params[:auth].present? &&
-          user_query_params[:user].present? &&
-          user_query_params[:pass].present?
+        params[:auth].present? &&
+          params[:user].present? &&
+          params[:pass].present?
       end
     end
   end
