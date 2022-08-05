@@ -3,8 +3,6 @@ class FindUser
 
   def call
     context.user = find_user
-  rescue ActiveRecord::RecordNotFound => e
-    context.fail!(error: e.message)
   end
 
   private
