@@ -8,6 +8,8 @@ class FindUser
   private
 
   def find_user
-    User.find_by!(email: context.params[:user])
+    User.find(context.params[:user_id])
+  rescue ActiveRecord::RecordNotFound => e
+    context.fail!(message: e.message)
   end
 end

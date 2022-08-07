@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_31_161825) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_06_002134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_31_161825) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fsacars_connections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "pass"
+    t.string "auth"
+    t.string "version"
+    t.string "lat"
+    t.string "lon"
+    t.string "eqpt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fsacars_connections_on_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -61,9 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_31_161825) do
     t.string "landing_fps"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "confirmation_token", limit: 128
+    t.string "remember_token", limit: 128
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["rating_id"], name: "index_users_on_rating_id"
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "fsacars_connections", "users"
 end

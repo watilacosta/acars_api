@@ -4,20 +4,20 @@ module Api
   module Version1
     class UserQueryController < ApplicationController
       def index
-        FindUser.call(params:)
+        return render body: 'NOUSER' unless valid_params?
 
-        render body: valid_params? ? 'USEROK' : 'NOUSER'
-      rescue ActiveRecord::RecordNotFound => e
-        puts e
-        render body: 'NOUSER'
+        result = FsacarsConnectOrganizer.call(params:)
+
+        render body: result.success? ? 'USEROK' : 'NOUSER'
       end
 
       private
 
       def valid_params?
-        params[:auth].present? &&
-          params[:user].present? &&
-          params[:pass].present?
+        params[:user_query][:user].present? &&
+          params[:user_query][:pass].present? &&
+          params[:user_query][:auth].present?
+
       end
     end
   end

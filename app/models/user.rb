@@ -14,13 +14,15 @@
 #  lastname               :string
 #  callsign               :string
 #  rating_id              :bigint
-#  status                 :integer          default(0)
-#  profile                :integer          default(0)
+#  status                 :integer          default("inactive")
+#  profile                :integer          default("pilot")
 #  total_hours            :time             default(Sat, 01 Jan 2000 00:00:00.000000000 UTC +00:00)
 #  total_flights          :integer          default(0)
 #  landing_fps            :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  confirmation_token     :string(128)
+#  remember_token         :string(128)
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:

@@ -1,22 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe 'AircraftModels', type: :request do
-  let(:rating) { create(:rating) }
-  let(:user) { create(:user, rating:) }
+  let(:user) { create(:user) }
   let(:params) do
     {
-      user: user.email,
-      pass: '123456',
-      auth: 'auth',
-      ver: '1.0',
-      lat: '0.0',
-      lon: '0.0',
-      eqpt: 'B738'
+      user_id: user.id,
+      user_query: {
+        user: user.email,
+        pass: '123456',
+        auth: 'auth',
+        ver: '1.0',
+        lat: '0.0',
+        lon: '0.0',
+        eqpt: 'B738'
+      }
     }
   end
 
   describe 'GET /index' do
-    before { get api_version1_user_query_path, params: params }
+    before do
+      get api_version1_user_query_path, params: params
+    end
 
     context 'when user exists' do
       it 'returns body USEROK' do
@@ -27,13 +31,16 @@ RSpec.describe 'AircraftModels', type: :request do
     context 'when user does not exist' do
       let(:params) do
         {
-          user: '',
-          pass: '123456',
-          auth: 'auth',
-          ver: '1.0',
-          lat: '0.0',
-          lon: '0.0',
-          eqpt: 'B738'
+          user_id: 0,
+          user_query: {
+            user: 'email@teste.com',
+            pass: '123456',
+            auth: 'auth',
+            ver: '1.0',
+            lat: '0.0',
+            lon: '0.0',
+            eqpt: 'B738'
+          }
         }
       end
 
@@ -42,7 +49,7 @@ RSpec.describe 'AircraftModels', type: :request do
       end
 
       it 'ActiveRecord::RecordNotFound' do
-        expect { User.find_by!(email: '') }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { User.find(0) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
