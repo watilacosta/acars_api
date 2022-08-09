@@ -413,6 +413,43 @@
           null
         ]
       },
+      "/acars_api/spec/models/fleet_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          2,
+          2,
+          2,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/acars_api/app/models/fleet.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
       "/acars_api/spec/models/fsacars_connection_spec.rb": {
         "lines": [
           null,
@@ -434,6 +471,12 @@
           null,
           1,
           1,
+          2,
+          null,
+          null,
+          1,
+          2,
+          null,
           null
         ]
       },
@@ -455,6 +498,8 @@
           null,
           null,
           1,
+          1,
+          null,
           1,
           null
         ]
@@ -970,6 +1015,6 @@
         ]
       }
     },
-    "timestamp": 1659904813
+    "timestamp": 1660005700
   }
 }
