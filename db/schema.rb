@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_06_002134) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_004440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_002134) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "fleets", force: :cascade do |t|
+    t.bigint "aircraft_model_id", null: false
+    t.string "designator"
+    t.string "cover"
+    t.string "turbulence_category"
+    t.bigint "location_id", null: false
+    t.integer "status"
+    t.bigint "hub_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aircraft_model_id"], name: "index_fleets_on_aircraft_model_id"
+    t.index ["hub_id"], name: "index_fleets_on_hub_id"
+    t.index ["location_id"], name: "index_fleets_on_location_id"
   end
 
   create_table "fsacars_connections", force: :cascade do |t|
@@ -83,5 +98,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_06_002134) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "fleets", "aircraft_models"
+  add_foreign_key "fleets", "airports", column: "hub_id"
+  add_foreign_key "fleets", "airports", column: "location_id"
   add_foreign_key "fsacars_connections", "users"
 end
