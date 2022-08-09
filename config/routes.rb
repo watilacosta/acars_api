@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :version1 do
       get 'user_query' => 'user_query#index'
+      get 'position_reports' => 'position_reports#index'
     end
   end
 
