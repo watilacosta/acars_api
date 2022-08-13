@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_004440) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_09_185346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_004440) do
     t.index ["user_id"], name: "index_fsacars_connections_on_user_id"
   end
 
+  create_table "pirep_identifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "authentication"
+    t.string "fsacars_version"
+    t.string "fsversion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pirep_identifications_on_user_id"
+  end
+
   create_table "ratings", force: :cascade do |t|
     t.string "description"
     t.string "min_hours", null: false
@@ -102,4 +112,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_004440) do
   add_foreign_key "fleets", "airports", column: "hub_id"
   add_foreign_key "fleets", "airports", column: "location_id"
   add_foreign_key "fsacars_connections", "users"
+  add_foreign_key "pirep_identifications", "users"
 end
