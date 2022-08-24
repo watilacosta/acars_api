@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  namespace :api do
+    namespace :version1 do
+      get 'user_query' => 'user_query#index'
+      get 'position_reports' => 'position_reports#index'
+    end
+  end
+
+  resources :aircraft_models, only: %i[index create update destroy]
+  resources :ratings, only: %i[index create update destroy]
 end

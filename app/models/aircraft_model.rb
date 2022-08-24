@@ -11,6 +11,6 @@
 #  updated_at  :datetime         not null
 #
 class AircraftModel < ApplicationRecord
-  validates :description, presence: true, length: { maximum: 20 }
+  validates :description, presence: true, uniqueness: true, length: { maximum: 20 }
   validates :maker, presence: true, length: { maximum: 50 }
 end
